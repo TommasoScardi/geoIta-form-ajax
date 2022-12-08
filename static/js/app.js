@@ -1,3 +1,5 @@
+const URL = "http://localhost/form-api/api/api.php";
+
 const idSelRegioni = "regioni";
 const idSelProvince = "province";
 const idSelComuni = "comuni";
@@ -69,7 +71,7 @@ function populateSelComuni(comuni) {
 function reqRegioni() {
     const ajaxOptions = {
         async: true,
-        url: "http://localhost/form-api/api.php?q=getRegioni",
+        url: `${URL}?q=getRegioni`,
         method: "GET",
         processData:false
     };
@@ -89,7 +91,7 @@ function reqProvince(regName) {
     if(regName === undefined) return;
     const ajaxOptions = {
         async: true,
-        url: `http://localhost/form-api/api.php?q=getProvince&regione=${regName}`,
+        url: `${URL}?q=getProvince&regione=${regName}`,
         method: "GET",
         processData:false
     };
@@ -109,7 +111,7 @@ function reqComuni(provSigla) {
     if(provSigla === undefined) return;
     const ajaxOptions = {
         async: true,
-        url: `http://localhost/form-api/api.php?q=getComuni&sigla=${provSigla}`,
+        url: `${URL}?q=getComuni&siglaProv=${provSigla}`,
         method: "GET",
         processData:false
     };
@@ -131,7 +133,7 @@ function sendReq(data)
     if(JSON.stringify(data) === undefined) return;
     const ajaxOptions = {
         async: true,
-        url: 'http://localhost/form-api/api.php',
+        url: URL,
         method: "POST",
         processData:false,
         contentType: "application/json",

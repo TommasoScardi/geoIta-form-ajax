@@ -20,7 +20,7 @@
       <div class="">
         <div class="alertPlaceholder"></div>
         <h4 class="mb-3">Indirizzo Residenza</h4>
-        <form class="needs-validation" novalidate="">
+        <form id="form-geo" class="needs-validation" novalidate="">
           
         <div class="">
               <label for="country" class="form-label">Regione</label>
@@ -85,6 +85,18 @@
         $("#province").on("change", function(e){
             const codProv = e.currentTarget.value;
             reqComuni(codProv);
+        })
+
+        $("#form-geo").on("submit", function(e) {
+          e.stopPropagation();
+          e.preventDefault();
+
+          const dataToSend = {
+            regione: $("#regioni").val(),
+            provincia: $("#province").val(),
+            comune: $("#comuni").val()
+          };
+          sendReq(dataToSend);
         })
     })
 </script>

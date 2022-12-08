@@ -95,14 +95,14 @@ function reqProvince(regName) {
     };
 
     $.ajax(ajaxOptions)
-    .fail(function(errData){
-        const jsonRes = JSON.parse(errData);
-        alert(jsonRes.message, 'danger');
-    })
-    .done(function(data){
-        const jsonRes = JSON.parse(data);
-        populateSelProvince(jsonRes);
-    });
+        .fail(function(errData){
+            const jsonRes = JSON.parse(errData);
+            alert(jsonRes.message, 'danger');
+        })
+        .done(function(data){
+            const jsonRes = JSON.parse(data);
+            populateSelProvince(jsonRes);
+        });
 }
 
 function reqComuni(provSigla) {
@@ -115,12 +115,38 @@ function reqComuni(provSigla) {
     };
 
     $.ajax(ajaxOptions)
-    .fail(function(errData){
-        const jsonRes = JSON.parse(errData);
-        alert(jsonRes.message, 'danger');
-    })
-    .done(function(data){
-        const jsonRes = JSON.parse(data);
-        populateSelComuni(jsonRes);
-    });
+        .fail(function(errData){
+            const jsonRes = JSON.parse(errData);
+            alert(jsonRes.message, 'danger');
+        })
+        .done(function(data){
+            const jsonRes = JSON.parse(data);
+            populateSelComuni(jsonRes);
+        });
+}
+
+function sendReq(data)
+{
+    if(data === undefined) return;
+    if(JSON.stringify(data) === undefined) return;
+    const ajaxOptions = {
+        async: true,
+        url: 'http://localhost/form-api/api.php',
+        method: "POST",
+        processData:false,
+        contentType: "application/json",
+        data: JSON.stringify(data)
+    };
+
+    $.ajax(ajaxOptions)
+        .fail(function(errData){
+            console.log(errData);
+            // const jsonRes = JSON.parse(errData);
+            // alert(jsonRes.message, 'danger');
+        })
+        .done(function(data){
+            console.log(data);
+            // const jsonRes = JSON.parse(data);
+            // alert(jsonRes.message, 'success');
+        });
 }

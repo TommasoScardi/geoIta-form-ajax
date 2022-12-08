@@ -72,63 +72,19 @@
     
 <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
-
+<script src="./static/js/app.js"></script>
 <script>
     $(function(){
-        $.ajax({
-            async: true,
-            //crossDomain: true,
-            url: "http://localhost/form-api/api.php?q=getRegioni",
-            method: "GET",
-            processData:false
-        }).done(function (response) {
-            const jsonRes = JSON.parse(response);
-            jsonRes.forEach((val) => {
-                $("#regioni").append($('<option>', {
-                    value: val.nome,
-                    text: val.nome
-                }))
-            });
-            console.log(this);
-        });
+        reqRegioni();
+
         $("#regioni").on("change", function(e){
             const regName = e.currentTarget.value;
-            $.ajax({
-                async: true,
-                //crossDomain: true,
-                url: `http://localhost/form-api/api.php?q=getProvince&regione=${regName}`,
-                method: "GET",
-                processData:false
-            }).done(function(response){
-                const jsonRes = JSON.parse(response);
-                jsonRes.forEach((val) => {
-                    $("#province").append($('<option>', {
-                        value: val.sigla,
-                        text: `${val.nome} - ${val.sigla}`
-                    }))
-                });
-                console.log(response);
-            });
+            reqProvince(regName);
         });
 
         $("#province").on("change", function(e){
             const codProv = e.currentTarget.value;
-            $.ajax({
-                async: true,
-                //crossDomain: true,
-                url: `http://localhost/form-api/api.php?q=getComuni&sigla=${codProv}`,
-                method: "GET",
-                processData:false
-            }).done(function(response){
-                const jsonRes = JSON.parse(response);
-                jsonRes.forEach((val) => {
-                    $("#comuni").append($('<option>', {
-                        value: val.nome,
-                        text: val.nome
-                    }))
-                });
-                console.log(response);
-            })
+            reqComuni(codProv);
         })
     })
 </script>

@@ -16,7 +16,18 @@ const alert = (message, type) => {
 }
 
 function populateSelRegioni(regioni) {
-    $(`#${idSelRegioni}`).empty();
+    $(`#${idSelRegioni}`).empty().append($('<option>', {
+        text: "Scegli ...",
+        selected: true
+    }));
+    $(`#${idSelProvince}`).empty().append($('<option>', {
+        text: "Scegli ...",
+        selected: true
+    }));
+    $(`#${idSelComuni}`).empty().append($('<option>', {
+        text: "Scegli ...",
+        selected: true
+    }));
     regioni.forEach((value) => {
         $(`#${idSelRegioni}`).append($('<option>', {
             value: value.nome,
@@ -26,7 +37,14 @@ function populateSelRegioni(regioni) {
 }
 
 function populateSelProvince(province) {
-    $(`#${idSelProvince}`).empty();
+    $(`#${idSelProvince}`).empty().append($('<option>', {
+        text: "Scegli ...",
+        selected: true
+    }));
+    $(`#${idSelComuni}`).empty().append($('<option>', {
+        text: "Scegli ...",
+        selected: true
+    }));
     province.forEach((value) => {
         $(`#${idSelProvince}`).append($('<option>', {
             value: value.sigla,
@@ -36,7 +54,10 @@ function populateSelProvince(province) {
 }
 
 function populateSelComuni(comuni) {
-    $(`#${idSelComuni}`).empty();
+    $(`#${idSelComuni}`).empty().append($('<option>', {
+        text: "Scegli ...",
+        selected: true
+    }));
     comuni.forEach((value) => {
         $(`#${idSelComuni}`).append($('<option>', {
             value: value.nome,

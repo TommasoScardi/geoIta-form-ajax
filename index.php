@@ -18,7 +18,7 @@
 
     <div class="row g-5">
       <div class="">
-        <div class="alertPlaceholder"></div>
+        <div id="alertPlaceholder"></div>
         <h4 class="mb-3">Indirizzo Residenza</h4>
         <form id="form-geo" class="needs-validation" novalidate="">
           

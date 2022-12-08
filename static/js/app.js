@@ -4,7 +4,7 @@ const idSelRegioni = "regioni";
 const idSelProvince = "province";
 const idSelComuni = "comuni";
 
-const alertPlaceholder = $('#alertPlaceholder');
+const alertPlaceholder = document.getElementById('alertPlaceholder');
 const alert = (message, type) => {
     const wrapper = document.createElement('div')
     wrapper.innerHTML = [
@@ -30,6 +30,7 @@ function populateSelRegioni(regioni) {
         text: "Scegli ...",
         selected: true
     }));
+    if(regioni === undefined) return;
     regioni.forEach((value) => {
         $(`#${idSelRegioni}`).append($('<option>', {
             value: value.nome,
@@ -47,6 +48,7 @@ function populateSelProvince(province) {
         text: "Scegli ...",
         selected: true
     }));
+    if(province === undefined) return;
     province.forEach((value) => {
         $(`#${idSelProvince}`).append($('<option>', {
             value: value.sigla,
@@ -60,6 +62,7 @@ function populateSelComuni(comuni) {
         text: "Scegli ...",
         selected: true
     }));
+    if(comuni === undefined) return;
     comuni.forEach((value) => {
         $(`#${idSelComuni}`).append($('<option>', {
             value: value.nome,
@@ -78,8 +81,9 @@ function reqRegioni() {
 
     $.ajax(ajaxOptions)
         .fail(function(errData){
-            const jsonRes = JSON.parse(errData);
+            const jsonRes = JSON.parse(errData.responseText);
             alert(jsonRes.message, 'danger');
+            populateSelRegioni();
         })
         .done(function(data){
             const jsonRes = JSON.parse(data);
@@ -98,8 +102,9 @@ function reqProvince(regName) {
 
     $.ajax(ajaxOptions)
         .fail(function(errData){
-            const jsonRes = JSON.parse(errData);
+            const jsonRes = JSON.parse(errData.responseText);
             alert(jsonRes.message, 'danger');
+            populateSelProvince();
         })
         .done(function(data){
             const jsonRes = JSON.parse(data);
@@ -118,8 +123,9 @@ function reqComuni(provSigla) {
 
     $.ajax(ajaxOptions)
         .fail(function(errData){
-            const jsonRes = JSON.parse(errData);
+            const jsonRes = JSON.parse(errData.responseText);
             alert(jsonRes.message, 'danger');
+            populateSelComuni();
         })
         .done(function(data){
             const jsonRes = JSON.parse(data);
@@ -143,7 +149,7 @@ function sendReq(data)
     $.ajax(ajaxOptions)
         .fail(function(errData){
             console.log(errData);
-            // const jsonRes = JSON.parse(errData);
+            // const jsonRes = JSON.parse(errData.responseText);
             // alert(jsonRes.message, 'danger');
         })
         .done(function(data){

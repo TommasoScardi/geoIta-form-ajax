@@ -41,7 +41,7 @@ function getProvince($regione) {
     $jsonObj = json_decode($rawJson, true);
     $provinceRegione = array();
     foreach ($jsonObj as $value) {
-        if(strcasecmp($value["regione"] ,$regione))
+        if(strcasecmp($value["regione"] ,$regione) === 0)
         {
             $jsonTempObj = new stdClass();
             $jsonTempObj->nome = $value["nome"];
@@ -70,12 +70,11 @@ function getComuni($siglaProvincia) {
         exit;
     }
 
-    $rawJson = file_get_contents("./res/province.json");
+    $rawJson = file_get_contents("../res/province.json");
     $json = json_decode($rawJson, true);
-    $provSigla = strtoupper($_GET["sigla"]);
     $provFound = false;
     foreach ($json as $value) {
-        if(strcmp($provSigla, $value["sigla"]) === 0)
+        if(strcasecmp($siglaProvincia, $value["sigla"]) === 0)
         {
             $provFound = true;
             break;
@@ -87,11 +86,11 @@ function getComuni($siglaProvincia) {
         exit;
     }
 
-    $rawJson = file_get_contents("./res/comuni.json");
+    $rawJson = file_get_contents("../res/comuni.json");
     $json = json_decode($rawJson, true);
     $comuniProvincia = array();
     foreach ($json as $value) {
-        if(strcmp($provSigla, $value["sigla"]) === 0)
+        if(strcasecmp($siglaProvincia, $value["sigla"]) === 0)
         {
             $jsonObj = new stdClass();
             $jsonObj->nome = $value["nome"];

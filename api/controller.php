@@ -10,18 +10,14 @@ function getRegioni() {
 
 function getProvince($regione) {
     if(!isset($regione)) {
-        header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found", true, 404);
-        echo '{"message": "no regione field found in query string"}';
-        exit;
+        NotFound("Campo regione assente nella richiesta");
     }
 
     $rawJson = file_get_contents("../res/regioni.json");
     $jsonObj = json_decode($rawJson, true);
 
     if(!is_array($jsonObj)) {
-        header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found", true, 404);
-        echo '{"message": "invalid json file regioni.json"}';
-        exit;
+        NotFound("File json archivio corrotto -> regioni.json");
     }
 
     $regioneFound = false;
@@ -32,9 +28,7 @@ function getProvince($regione) {
         }
     }
     if(!$regioneFound) {
-        header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found", true, 404);
-        echo '{"message": "the regione provided in the query sttring has no match!"}';
-        exit;
+        NotFound("La regione selezionata non ha province");
     }
 
     $rawJson = file_get_contents("../res/province.json");
@@ -50,9 +44,7 @@ function getProvince($regione) {
         }
     }
     if(count($provinceRegione) <= 0) {
-        header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found", true, 404);
-        echo '{"message": "no entry in the province array, there are problems with the selected regione"}';
-        exit;
+        NotFound("La regione selezionata non ha province, server error");
     }
     echo json_encode($provinceRegione);
     exit;
@@ -60,14 +52,10 @@ function getProvince($regione) {
 
 function getComuni($siglaProvincia) {
     if(!isset($siglaProvincia)) {
-        header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found", true, 404);
-        echo '{"message": "no sigla field found in query string"}';
-        exit;
+        NotFound("Campo sigla non trovato nella richiesta");
     }
     if(strlen($siglaProvincia) !== 2) {
-        header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found", true, 404);
-        echo '{"message": "sigla field is in an incorrect format"}';
-        exit;
+        NotFound("La sigla è in un formato incorretto -> $siglaProvincia");
     }
 
     $rawJson = file_get_contents("../res/province.json");
@@ -81,9 +69,7 @@ function getComuni($siglaProvincia) {
         }
     }
     if(!$provFound) {
-        header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found", true, 404);
-        echo '{"message": "no province found with gived name"}';
-        exit;
+        NotFound("Nessun comune trovato con la sigla fornita");
     }
 
     $rawJson = file_get_contents("../res/comuni.json");
@@ -98,9 +84,7 @@ function getComuni($siglaProvincia) {
         }
     }
     if(count($comuniProvincia) <= 0) {
-        header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found", true, 404);
-        echo '{"message": "no entry in the comuni array, there are problems with the selected provincia"}';
-        exit;
+        NotFound("Nessun comune trovato con la sigla fornita, server error");
     }
     echo json_encode($comuniProvincia);
     exit;

@@ -1,5 +1,6 @@
 <?php
 
+include_once "util.php";
 include_once "controller.php";
 
 if(isset($_GET["q"]) && str_contains($_GET["q"], "get"))

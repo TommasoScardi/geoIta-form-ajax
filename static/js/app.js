@@ -1,4 +1,4 @@
-const URL = "http://localhost/form-api/api/api.php";
+const URL = "api/api.php";
 
 const idSelRegioni = "regioni";
 const idSelProvince = "province";
@@ -19,15 +19,18 @@ const alert = (message, type) => {
 
 function populateSelRegioni(regioni) {
     $(`#${idSelRegioni}`).empty().append($('<option>', {
-        text: "Scegli ...",
+        text: "Scegli...",
+        value: "",
         selected: true
     }));
     $(`#${idSelProvince}`).empty().append($('<option>', {
-        text: "Scegli ...",
+        text: "Scegli...",
+        value: "",
         selected: true
     }));
     $(`#${idSelComuni}`).empty().append($('<option>', {
-        text: "Scegli ...",
+        text: "Scegli...",
+        value: "",
         selected: true
     }));
     if(regioni === undefined) return;
@@ -41,11 +44,13 @@ function populateSelRegioni(regioni) {
 
 function populateSelProvince(province) {
     $(`#${idSelProvince}`).empty().append($('<option>', {
-        text: "Scegli ...",
+        text: "Scegli...",
+        value: "",
         selected: true
     }));
     $(`#${idSelComuni}`).empty().append($('<option>', {
-        text: "Scegli ...",
+        text: "Scegli...",
+        value: "",
         selected: true
     }));
     if(province === undefined) return;
@@ -59,7 +64,8 @@ function populateSelProvince(province) {
 
 function populateSelComuni(comuni) {
     $(`#${idSelComuni}`).empty().append($('<option>', {
-        text: "Scegli ...",
+        text: "Scegli...",
+        value: "",
         selected: true
     }));
     if(comuni === undefined) return;
@@ -152,8 +158,8 @@ function sendReq(data)
             // const jsonRes = JSON.parse(errData.responseText);
             // alert(jsonRes.message, 'danger');
         })
-        .done(function(data){
-            console.log(data);
+        .done(function(dataRet){
+            alert(`Dati geografici inviati: regione: ${dataRet.regione}, provincia: ${dataRet.provincia}, comune: ${dataRet.comune}`, "success");
             // const jsonRes = JSON.parse(data);
             // alert(jsonRes.message, 'success');
         });
